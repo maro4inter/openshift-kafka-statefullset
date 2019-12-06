@@ -6,7 +6,7 @@ before_script:
   - docker login -u $CI_BUILD_USERNAME -p $CI_BUILD_TOKEN registry.gitlab.com
   - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 
-build_alpine:
+build_kafka:
   script:
 ## Gitlab Hub : registry.gitlab.com
     - docker build -t registry.gitlab.com/maro4inter/openshift:kafka ./
