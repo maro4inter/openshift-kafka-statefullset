@@ -16,7 +16,9 @@
 
 ### example kafka-ss-0 will give an id of 0 to the kafka broker.id in the stateful cluster in openshift
 brokerid=$(hostname | awk -F"-" '{print $3}')
-sed -i.bak 's/broker.id=0/broker.id=\$brokerid/g' /opt/kafka/config/server.properties
+oldbrokerid="broker.id=0"
+newbrokerid="broker.id="$brokerid
+sed -i.bak "s|$oldbrokerid|$newbrokerid|g" /opt/kafka/config/server.properties
 
 if [ $# -lt 1 ];
 then
