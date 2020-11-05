@@ -21,7 +21,7 @@ newbrokerid="broker.id="$brokerid
 sed -i.bak "s|$oldbrokerid|$newbrokerid|g" /opt/kafka/config/server.properties
 
 hostnamefull=$(hostname -A)
-echo "advertised.host.name="$hostnamefull >> /opt/kafka/config/server.properties
+##echo "advertised.host.name="$hostnamefull >> /opt/kafka/config/server.properties
 echo "advertised.listeners=PLAINTEXT://"$hostnamefull":9092" >> /opt/kafka/config/server.properties
 
 
