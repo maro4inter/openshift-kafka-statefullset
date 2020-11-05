@@ -15,6 +15,8 @@ RUN chmod -R a=u /opt/zookeeper
 
 WORKDIR /opt/kafka
 
+RUN ls -la /opt/kafka/bin/
+
 VOLUME /tmp/kafka-logs /tmp/zookeeper /data/kafka-logs /data/zookeeper /log/zookeeper
 
 EXPOSE 2181 2888 3888 9092 9308 9309
