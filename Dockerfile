@@ -8,7 +8,7 @@ RUN mkdir -p /opt/kafka \
   && curl -s https://www.mirrorservice.org/sites/ftp.apache.org/kafka/2.3.1/kafka_2.12-2.3.1.tgz | tar -xz --strip-components=1 \
   && yum clean all
 
-COPY zookeeper-starter.sh /opt/kafka/bin/
+COPY zookeeper-starter.sh bin/zookeeper-starter.sh
 
 RUN chmod -R a=u /opt/kafka
 RUN chmod -R a=u /opt/zookeeper
