@@ -17,7 +17,7 @@ WORKDIR /opt/kafka
 
 COPY zookeeper-starter.sh /opt/kafka/bin/zookeeper-starter.sh
 COPY kafka-starter.sh /opt/kafka/bin/kafka-starter.sh
-chmod -R +x /opt/kafka/bin/
+RUN chmod -R +x /opt/kafka/bin/
 
 
 VOLUME /tmp/kafka-logs /tmp/zookeeper /data/kafka-logs /data/zookeeper /log/zookeeper
