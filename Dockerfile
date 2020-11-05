@@ -2,11 +2,11 @@ FROM centos
 
 RUN mkdir -p /opt/kafka \
   && mkdir -p /opt/zookeeper \
-  && mkdie -p /data/kafka-logs \
+  && mkdir -p /data/kafka-logs \
   && mkdir -p /data/zookeeper \
-  && mkdie -p /tmp/kafka-logs \
+  && mkdir -p /tmp/kafka-logs \
   && mkdir -p /tmp/zookeeper \
-  && mkdie -p /log/kafka-logs \
+  && mkdir -p /log/kafka-logs \
   && mkdir -p /log/zookeeper \
   && cd /opt/kafka \
 #  && yum install -y java-latest-openjdk-headless tar \
