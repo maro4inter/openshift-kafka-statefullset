@@ -20,6 +20,11 @@ oldbrokerid="broker.id=0"
 newbrokerid="broker.id="$brokerid
 sed -i.bak "s|$oldbrokerid|$newbrokerid|g" /opt/kafka/config/server.properties
 
+hostnamefull=$(hostname -A)
+echo "advertised.host.name="$hostnamefull >> /opt/kafka/config/server.properties
+echo "advertised.listeners=PLAINTEXT://"$hostnamefull":9092" >> /opt/kafka/config/server.properties
+
+
 if [ $# -lt 1 ];
 then
 	echo "USAGE: $0 [-daemon] server.properties [--override property=value]*"
