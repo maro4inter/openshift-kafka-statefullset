@@ -8,17 +8,16 @@ RUN mkdir -p /opt/kafka \
   && curl -s https://www.mirrorservice.org/sites/ftp.apache.org/kafka/2.3.1/kafka_2.12-2.3.1.tgz | tar -xz --strip-components=1 \
   && yum clean all
 
+COPY zookeeper-starter.sh /opt/kafka/bin/zookeeper-starter.sh
+COPY kafka-starter.sh /opt/kafka/bin/kafka-starter.sh
 
+RUN chmod +x /opt/kafka/bin/kafka-starter.sh
+RUN chmod +x /opt/kafka/bin/zookeeper-starter.sh
 
 RUN chmod -R a=u /opt/kafka
 RUN chmod -R a=u /opt/zookeeper
 
 WORKDIR /opt/kafka
-
-COPY zookeeper-starter.sh /opt/kafka/bin/zookeeper-starter.sh
-COPY kafka-starter.sh /opt/kafka/bin/kafka-starter.sh
-RUN chmod -R +x /opt/kafka/bin/
-
 
 VOLUME /tmp/kafka-logs /tmp/zookeeper /data/kafka-logs /data/zookeeper /log/zookeeper
 
