@@ -20,11 +20,10 @@ echo "$myid" > /data/zookeeper/myid
 myip=$(hostname -i)
 ok="0"
 
-
 if [ $# -lt 1 ];
 then
-    echo "USAGE: $0 [-daemon] zookeeper.properties"
-    exit 1
+	echo "USAGE: $0 [-daemon] zookeeper.properties"
+	exit 1
 fi
 base_dir=$(dirname $0)
 
@@ -40,13 +39,12 @@ EXTRA_ARGS=${EXTRA_ARGS-'-name zookeeper -loggc'}
 
 COMMAND=$1
 case $COMMAND in
--daemon)
-    EXTRA_ARGS="-daemon "$EXTRA_ARGS
-    shift
-    ;;
-*)
-    ;;
+  -daemon)
+     EXTRA_ARGS="-daemon "$EXTRA_ARGS
+     shift
+     ;;
+ *)
+     ;;
 esac
-done
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS org.apache.zookeeper.server.quorum.QuorumPeerMain "$@"
