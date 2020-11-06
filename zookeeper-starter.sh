@@ -17,46 +17,36 @@
 ### example zookeeper-ss-0 will give an id of 0 to the zookeeper node in the stateful cluster in openshift
 myid=$(hostname | awk -F"-" '{print $3}')
 echo "$myid" > /data/zookeeper/myid
-
-myhostname=${HOSTNAME}
-myhostnameip=${HOSTNAME-internal-cluster-ip}
-export cluster-${myhostname}-ip=${myhostnameip}
+myip=$(hostname -i)
 ok="0"
 
-while [ "$ok" = "0" ]
-do
-    if [[ -z "${cluster-zookeeper-ss-0-ip}" && -z "${cluster-zookeeper-ss-1-ip}" && -z "${cluster-zookeeper-ss-2-ip}" ]]; then
-        ok="1"
-        echo "\r\nserver.0=${cluster-zookeeper-ss-0-ip}:2888:3888\r\nserver.1=${cluster-zookeeper-ss-1-ip}:2888:3888\r\nserver.2=${cluster-zookeeper-ss-2-ip}:2888:3888" >> /opt/zookeeper/conf/zookeeper.cfg
-        if [ $# -lt 1 ];
-        then
-            echo "USAGE: $0 [-daemon] zookeeper.properties"
-            exit 1
-        fi
-        base_dir=$(dirname $0)
 
-        if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
-            export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
-        fi
+if [ $# -lt 1 ];
+then
+    echo "USAGE: $0 [-daemon] zookeeper.properties"
+    exit 1
+fi
+base_dir=$(dirname $0)
 
-        if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
-            export KAFKA_HEAP_OPTS="-Xmx512M -Xms512M"
-        fi
+if [ "x$KAFKA_LOG4J_OPTS" = "x" ]; then
+    export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"
+fi
 
-        EXTRA_ARGS=${EXTRA_ARGS-'-name zookeeper -loggc'}
+if [ "x$KAFKA_HEAP_OPTS" = "x" ]; then
+    export KAFKA_HEAP_OPTS="-Xmx512M -Xms512M"
+fi
 
-        COMMAND=$1
-        case $COMMAND in
-        -daemon)
-            EXTRA_ARGS="-daemon "$EXTRA_ARGS
-            shift
-            ;;
-        *)
-            ;;
-        esac
-    else
-        ok="0"
-    fi
+EXTRA_ARGS=${EXTRA_ARGS-'-name zookeeper -loggc'}
+
+COMMAND=$1
+case $COMMAND in
+-daemon)
+    EXTRA_ARGS="-daemon "$EXTRA_ARGS
+    shift
+    ;;
+*)
+    ;;
+esac
 done
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS org.apache.zookeeper.server.quorum.QuorumPeerMain "$@"
