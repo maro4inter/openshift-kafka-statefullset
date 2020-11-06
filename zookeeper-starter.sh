@@ -19,7 +19,7 @@ myid=$(hostname | awk -F"-" '{print $3}')
 echo "$myid" > /data/zookeeper/myid
 
 myhostname=$HOSTNAME
-myhostnameip=${myhostname}-internal-cluster-ip
+myhostnameip=$HOSTNAME-internal-cluster-ip
 export cluster-${myhostname}-ip=$myhostnameip
 ok="0"
 
