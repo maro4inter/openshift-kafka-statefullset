@@ -25,6 +25,9 @@ hostnamefull=`echo $hostnamefull | sed 's/ *$//g'`
 ##echo "advertised.host.name="$hostnamefull >> /opt/kafka/config/server.properties
 echo "advertised.listeners=PLAINTEXT://"$hostnamefull":9092" >> /opt/kafka/config/server.properties
 
+# Maps listener names to security protocols, the default is for them to be the same. See the config documentation for more details
+#listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
+echo "listener.security.protocol.map=PLAINTEXT:PLAINTEXT" >> /opt/kafka/config/server.properties
 
 if [ $# -lt 1 ];
 then
