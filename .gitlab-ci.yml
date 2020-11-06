@@ -9,10 +9,13 @@ before_script:
 build_kafka:
   script:
 ## Gitlab Hub : registry.gitlab.com
-    - docker build -t registry.gitlab.com/maro4inter/openshift-kafka:2.3.1 ./
+    ##- docker build -t registry.gitlab.com/maro4inter/openshift-kafka:2.3.1 ./
+    - docker build -t registry.gitlab.com/maro4inter/openshift-kafka:latest ./
 ###    - docker push registry.gitlab.com/maro4inter/openshift-kafka:2.3.1
-    - docker tag registry.gitlab.com/maro4inter/openshift-kafka:2.3.1 $DOCKER_HUB_USERNAME/openshift-kafka:2.3.1
+    ##- docker tag registry.gitlab.com/maro4inter/openshift-kafka:2.3.1 $DOCKER_HUB_USERNAME/openshift-kafka:2.3.1
+    - docker tag registry.gitlab.com/maro4inter/openshift-kafka:latest $DOCKER_HUB_USERNAME/openshift-kafka:latest
 ## Docker Hub
-    - docker push $DOCKER_HUB_USERNAME/openshift-kafka:2.3.1
+    ##- docker push $DOCKER_HUB_USERNAME/openshift-kafka:2.3.1
+    - docker push $DOCKER_HUB_USERNAME/openshift-kafka:latest
   only:
     - master
