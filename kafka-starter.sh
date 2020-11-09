@@ -14,21 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-### example kafka-ss-0 will give an id of 0 to the kafka broker.id in the stateful cluster in openshift
-brokerid=$(hostname | awk -F"-" '{print $3}')
-oldbrokerid="broker.id=0"
-newbrokerid="broker.id="$brokerid
-sed -i.bak "s|$oldbrokerid|$newbrokerid|g" /opt/kafka/config/server.properties
-
-hostnamefull=$(hostname -A)
-hostnamefull=`echo $hostnamefull | sed 's/ *$//g'`
-##echo "advertised.host.name="$hostnamefull >> /opt/kafka/config/server.properties
-echo "advertised.listeners=PLAINTEXT://"$hostnamefull":9092" >> /opt/kafka/config/server.properties
-
-# Maps listener names to security protocols, the default is for them to be the same. See the config documentation for more details
-#listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
-echo "listener.security.protocol.map=PLAINTEXT:PLAINTEXT" >> /opt/kafka/config/server.properties
-
 if [ $# -lt 1 ];
 then
 	echo "USAGE: $0 [-daemon] server.properties [--override property=value]*"
@@ -55,5 +40,21 @@ case $COMMAND in
   *)
     ;;
 esac
+
+
+### example kafka-ss-0 will give an id of 0 to the kafka broker.id in the stateful cluster in openshift
+brokerid=$(hostname | awk -F"-" '{print $3}')
+oldbrokerid="broker.id=0"
+newbrokerid="broker.id="$brokerid
+sed -i.bak "s|$oldbrokerid|$newbrokerid|g" /opt/kafka/config/server.properties
+
+hostnamefull=$(hostname -A)
+hostnamefull=`echo $hostnamefull | sed 's/ *$//g'`
+##echo "advertised.host.name="$hostnamefull >> /opt/kafka/config/server.properties
+echo "advertised.listeners=PLAINTEXT://"$hostnamefull":9092" >> /opt/kafka/config/server.properties
+
+# Maps listener names to security protocols, the default is for them to be the same. See the config documentation for more details
+#listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
+echo "listener.security.protocol.map=PLAINTEXT:PLAINTEXT" >> /opt/kafka/config/server.properties
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS kafka.Kafka "$@"
