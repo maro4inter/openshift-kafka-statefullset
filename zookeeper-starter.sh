@@ -14,12 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-### example zookeeper-ss-0 will give an id of 0 to the zookeeper node in the stateful cluster in openshift
-myid=$(hostname | awk -F"-" '{print $3}')
-echo "$myid" > /data/zookeeper/myid
-myip=$(hostname -i)
-ok="0"
-
 if [ $# -lt 1 ];
 then
 	echo "USAGE: $0 [-daemon] zookeeper.properties"
@@ -46,5 +40,13 @@ case $COMMAND in
  *)
      ;;
 esac
+
+
+### example zookeeper-ss-0 will give an id of 0 to the zookeeper node in the stateful cluster in openshift
+myid=$(hostname | awk -F"-" '{print $3}')
+echo "$myid" > /data/zookeeper/myid
+echo "$myid" > /tmp/zookeeper/myid
+myip=$(hostname -i)
+ok="0"
 
 exec $base_dir/kafka-run-class.sh $EXTRA_ARGS org.apache.zookeeper.server.quorum.QuorumPeerMain "$@"
