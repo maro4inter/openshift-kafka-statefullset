@@ -31,4 +31,6 @@ RUN ls -la bin/
 
 VOLUME /tmp/kafka-logs /tmp/zookeeper /data/kafka-logs /data/zookeeper /log/zookeeper /log/kafka-logs
 
+RUN rm -rf /tmp/kafka-logs/* /tmp/zookeeper/* /data/kafka-logs/* /data/zookeeper/* /log/zookeeper/* /log/kafka-logs/*
+
 EXPOSE 2181 2888 3888 9092 9308 9309
